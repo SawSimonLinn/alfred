@@ -4,8 +4,16 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "../theme-toggle";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -58,7 +66,13 @@ const Header = () => {
     };
   }, []);
 
-  const NavLinks = ({ className, onItemClick }: { className?: string; onItemClick?: () => void }) => (
+  const NavLinks = ({
+    className,
+    onItemClick,
+  }: {
+    className?: string;
+    onItemClick?: () => void;
+  }) => (
     <nav className={cn("flex items-center gap-6", className)}>
       {navItems.map((item) => (
         <Link
@@ -82,17 +96,24 @@ const Header = () => {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/80 backdrop-blur-sm shadow-md" : "bg-transparent"
+        isScrolled
+          ? "bg-background/80 backdrop-blur-sm shadow-md"
+          : "bg-transparent"
       )}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="#home" className="text-xl font-headline tracking-wider text-foreground">
+        <Link
+          href="#home"
+          className="text-xl font-headline tracking-wider text-foreground"
+        >
           Alfred's Design
         </Link>
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
           <NavLinks />
+          <ThemeToggle />
         </div>
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -103,8 +124,11 @@ const Header = () => {
             <SheetContent side="right">
               <SheetHeader>
                 <SheetTitle className="text-left">
-                  <Link href="#home" className="text-xl font-headline tracking-wider text-foreground">
-                      Alfred's Design
+                  <Link
+                    href="#home"
+                    className="text-xl font-headline tracking-wider text-foreground"
+                  >
+                    Alfred's Design
                   </Link>
                 </SheetTitle>
               </SheetHeader>
@@ -112,10 +136,12 @@ const Header = () => {
                 <NavLinks
                   className="flex-col items-start gap-4"
                   onItemClick={() => {
-                     const closeButton = document.querySelector('[data-radix-dialog-close]');
-                     if (closeButton instanceof HTMLElement) {
-                       closeButton.click();
-                     }
+                    const closeButton = document.querySelector(
+                      "[data-radix-dialog-close]"
+                    );
+                    if (closeButton instanceof HTMLElement) {
+                      closeButton.click();
+                    }
                   }}
                 />
               </div>
